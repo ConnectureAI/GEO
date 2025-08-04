@@ -1,0 +1,13 @@
+{
+  "name": "autonomous-ai-os",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "ai_shell.js",
+  "scripts": {
+    "start": "./start.sh",
+    "categorize": "node markdown_agent.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

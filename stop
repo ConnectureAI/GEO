@@ -1,0 +1,50 @@
+#!/bin/bash
+# ============================================================================
+# SEO Intelligence Platform - Development Stop Script
+# Graceful shutdown with state preservation
+# ============================================================================
+
+set -euo pipefail
+
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STATE_DIR="$PROJECT_ROOT/.dev-state"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+echo -e "${BOLD}${YELLOW}🛑 Shutting down SEO Development Environment...${NC}"
+echo
+
+# Save final state
+if [[ -f "$STATE_DIR/development.json" ]]; then
+    jq --arg time "$(date -Iseconds)" \
+       '.session.lastCheckpoint = $time | .session.shutdownGraceful = true' \
+       "$STATE_DIR/development.json" > "$STATE_DIR/development.tmp" && \
+       mv "$STATE_DIR/development.tmp" "$STATE_DIR/development.json"
+    echo -e "${GREEN}✅ State saved successfully${NC}"
+fi
+
+# Stop services gracefully
+echo -e "${BLUE}🔧 Stopping development services...${NC}"
+
+# Stop Node.js processes
+pkill -f "node.*dashboard" 2>/dev/null || true
+pkill -f "node.*kpi-server" 2>/dev/null || true
+pkill -f "ollama" 2>/dev/null || true
+
+# Stop Docker containers
+docker stop seo-postgres seo-redis 2>/dev/null || true
+docker rm seo-postgres seo-redis 2>/dev/null || true
+
+# Stop monitoring processes
+pkill -f "monitor_hardware" 2>/dev/null || true
+
+echo -e "${GREEN}✅ All services stopped${NC}"
+echo -e "${YELLOW}💾 Development state preserved for auto-resume${NC}"
+echo -e "${BLUE}🔄 Run ./start to resume development${NC}"
+echo

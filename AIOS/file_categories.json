@@ -1,0 +1,43 @@
+{
+  "development": [
+    {
+      "path": "node_modules/data-uri-to-buffer/README.md",
+      "name": "README.md",
+      "size": 2924
+    },
+    {
+      "path": "node_modules/fetch-blob/README.md",
+      "name": "README.md",
+      "size": 5106
+    },
+    {
+      "path": "node_modules/formdata-polyfill/README.md",
+      "name": "README.md",
+      "size": 5295
+    },
+    {
+      "path": "node_modules/node-domexception/README.md",
+      "name": "README.md",
+      "size": 1998
+    },
+    {
+      "path": "node_modules/web-streams-polyfill/README.md",
+      "name": "README.md",
+      "size": 6527
+    }
+  ],
+  "documentation": [
+    {
+      "path": "node_modules/node-fetch/LICENSE.md",
+      "name": "LICENSE.md",
+      "size": 1090
+    }
+  ],
+  "seo": [
+    {
+      "path": "node_modules/node-fetch/README.md",
+      "name": "README.md",
+      "size": 29107
+    }
+  ]
+}
